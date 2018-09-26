@@ -1,11 +1,8 @@
 extern crate goto;
-//use std::io;
-//use std::fs::{self, DirEntry};
-//use std::path::Path;
+
 use std::env;
 use goto::argument_parser::extract_arguments;
 use goto::help::get_help;
-
 
 fn main() {
     let args: Vec<String> = env::args().collect();
