@@ -1,5 +1,5 @@
 pub struct Arguments {
-    pattern: String
+    pub pattern: String
 }
 
 pub fn extract_arguments(args: Vec<String>) -> (bool, Arguments) {
