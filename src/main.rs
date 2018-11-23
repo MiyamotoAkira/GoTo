@@ -25,12 +25,23 @@ fn main() -> std::io::Result<()> {
 
     visit_dirs(&current_path, &arguments.pattern, &mut possibles);
 
-    println!("{:#?}", possibles);
+    let enumerated = enumerate(&possibles);
+
+    println!("{:#?}", enumerated);
+
+    let mut input = String::new();
+    std::io::stdin().read_line(&mut input)?;
+
+    let trimmed = input.trim();
+    match trimmed.parse::<usize>() {
+        Ok(i) => println!("You have chosen {}", possibles[i-1]),
+        Err(..) => println!("this was not an integer: {}", trimmed),
+    };
 
     Ok(())
 }
 
-fn visit_dirs(dir: &path::Path, pattern: &String,  possibles: &mut Vec<String>) -> std::io::Result<()>{
+fn visit_dirs(dir: &path::Path, pattern: &String,  possibles: &mut Vec<String>) -> std::io::Result<()> {
     for entry in std::fs::read_dir(dir)? {
         let entry = entry?;
         let path = entry.path();
@@ -46,4 +57,16 @@ fn visit_dirs(dir: &path::Path, pattern: &String,  possibles: &mut Vec<String>) 
     }
 
     Ok(())
+}
+
+fn enumerate(possibles: &Vec<String>) -> Vec<(i32, &String)> {
+    let mut enumerated = Vec::new();
+
+    let mut index = 1;
+    for entry in possibles {
+        enumerated.push((index, entry));
+        index = index + 1;
+    }
+
+    return enumerated
 }
